@@ -4,6 +4,8 @@ import cv2, sys
 cap = cv2.VideoCapture(0)
 cv2.namedWindow("Frame", cv2.WINDOW_NORMAL)
 
+HALF_WIDTH = 25
+
 # Our ROI, defined by two points
 p1, p2 = None, None
 state = 0
@@ -16,15 +18,15 @@ def on_mouse(event, x, y, flags, userdata):
     if event == cv2.EVENT_LBUTTONUP:
         # Select first point
         if state == 0:
-            p1 = (x - 25, y + 25)
+            p1 = (x - HALF_WIDTH, y + HALF_WIDTH)
             state += 1
-            p2 = (x + 25, y - 25)
+            p2 = (x + HALF_WIDTH, y - HALF_WIDTH)
 
         # Select second point
         elif state == 1:
-            p3 = (x - 25, y + 25)
+            p3 = (x - HALF_WIDTH, y + HALF_WIDTH)
             state += 1
-            p4 = (x + 25, y - 25)
+            p4 = (x + HALF_WIDTH, y - HALF_WIDTH)
     # Right click (erase current ROI)
     if event == cv2.EVENT_RBUTTONUP:
         p1, p2 = None, None
@@ -51,9 +53,7 @@ while cap.isOpened():
         # cv2.imshow("roi", roi_img)
 
     # Show image
-    cv2.imshow("Frame", frame)
-
-    # Let OpenCV manage window events
+    cv2.imshow("Image Stream", frame)
 
     # last 8 bits of keypress binary
     key = cv2.waitKey(50) & 0xFF
