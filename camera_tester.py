@@ -53,7 +53,7 @@ while cap.isOpened():
         # cv2.imshow("roi", roi_img)
 
     # Show image
-    cv2.imshow("Image Stream", frame)
+    cv2.imshow("Frame", frame)
 
     # last 8 bits of keypress binary
     key = cv2.waitKey(50) & 0xFF
