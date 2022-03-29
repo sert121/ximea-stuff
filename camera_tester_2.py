@@ -57,6 +57,7 @@ while cap.isOpened():
         # save roi frame
         roi_img_1 = frame[p2[1] : p1[1], p1[0] : p2[0]].copy()
         roi_img_2 = frame[p4[1] : p3[1], p3[0] : p4[0]].copy()
+        roi_joined = frame[a[1] : b[1], a[0] : b[0]].copy()
 
         state = 3  # after saving only once
 
@@ -80,6 +81,7 @@ while cap.isOpened():
     if key == ord("s") or key == ord("S"):
         cv2.imwrite(f"{os.curdir}/saved_images/roi_1.png", roi_img_1)
         cv2.imwrite(f"{os.curdir}/saved_images/roi_2.png", roi_img_2)
+        cv2.imwrite(f"{os.curdir}/saved_images/roi_joined.png", roi_joined)
 
     # ESC key to exit
     if key == 27:
