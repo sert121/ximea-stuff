@@ -4,7 +4,7 @@ import cv2, sys
 cap = cv2.VideoCapture(0)
 cv2.namedWindow("Frame", cv2.WINDOW_NORMAL)
 
-HALF_WIDTH = 25
+config = {"FRAME_HALF_WIDTH": 25, "FRAME_WEIGHT": 2}
 
 # Our ROI, defined by two points
 p1, p2 = None, None
@@ -18,15 +18,15 @@ def on_mouse(event, x, y, flags, userdata):
     if event == cv2.EVENT_LBUTTONUP:
         # Select first point
         if state == 0:
-            p1 = (x - HALF_WIDTH, y + HALF_WIDTH)
+            p1 = (x - config["FRAME_HALF_WIDTH"], y + config["FRAME_HALF_WIDTH"])
             state += 1
-            p2 = (x + HALF_WIDTH, y - HALF_WIDTH)
+            p2 = (x + config["FRAME_HALF_WIDTH"], y - config["FRAME_HALF_WIDTH"])
 
         # Select second point
         elif state == 1:
-            p3 = (x - HALF_WIDTH, y + HALF_WIDTH)
+            p3 = (x - config["FRAME_HALF_WIDTH"], y + config["FRAME_HALF_WIDTH"])
             state += 1
-            p4 = (x + HALF_WIDTH, y - HALF_WIDTH)
+            p4 = (x + config["FRAME_HALF_WIDTH"], y - config["FRAME_HALF_WIDTH"])
     # Right click (erase current ROI)
     if event == cv2.EVENT_RBUTTONUP:
         p1, p2 = None, None
@@ -42,10 +42,10 @@ while cap.isOpened():
 
     # If a ROI is selected, draw it
     if state == 1:
-        cv2.rectangle(frame, p1, p2, (255, 0, 0), 5)
+        cv2.rectangle(frame, p1, p2, (255, 0, 0), config["FRAME_WEIGHT"])
     elif state == 2:
-        cv2.rectangle(frame, p1, p2, (255, 0, 0), 5)
-        cv2.rectangle(frame, p3, p4, (255, 0, 0), 5)
+        cv2.rectangle(frame, p1, p2, (255, 0, 0), config["FRAME_WEIGHT"])
+        cv2.rectangle(frame, p3, p4, (255, 0, 0), config["FRAME_WEIGHT"])
 
         # save roi frame
         roi_img_1 = frame[p2[1] : p1[1], p1[0] : p2[0]].copy()
